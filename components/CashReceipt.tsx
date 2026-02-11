@@ -15,6 +15,18 @@ export default function CashReceipt() {
     orderName: '',
   });
 
+  const defaultForm = {
+    amount: '10000',
+    receiptType: 'PERSONAL' as 'PERSONAL' | 'BUSINESS',
+    phoneNumber: '010-1234-5678',
+    registrationNumber: '123-45-67890',
+    orderName: '커피 2잔',
+  };
+
+  if (formData.amount === '' && formData.orderName === '') {
+    setTimeout(() => setFormData(defaultForm), 0);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -37,13 +49,7 @@ export default function CashReceipt() {
       setResult(data);
 
       if (data.success) {
-        setFormData({
-          amount: '',
-          receiptType: 'PERSONAL',
-          phoneNumber: '',
-          registrationNumber: '',
-          orderName: '',
-        });
+        setFormData(defaultForm);
       }
     } catch (error) {
       console.error('Cash receipt error:', error);

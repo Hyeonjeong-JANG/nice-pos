@@ -17,6 +17,24 @@ export default function PaymentCard() {
     customerName: '',
   });
 
+  const defaultForm = {
+    amount: '10000',
+    cardNumber: '1234-5678-9012-3456',
+    expiryMonth: '12',
+    expiryYear: '25',
+    installment: '0',
+    orderName: '커피 2잔',
+    customerName: '홍길동',
+  };
+
+  // Prefill with defaults for easier testing / placeholder experience
+  // but keep controlled inputs so users can edit before submitting
+  if (formData.amount === '' && formData.cardNumber === '') {
+    // initialize once
+    // use a microtask to avoid changing state during render in strict mode
+    setTimeout(() => setFormData(defaultForm), 0);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -37,16 +55,8 @@ export default function PaymentCard() {
       setResult(data);
 
       if (data.success) {
-        // 성공 시 폼 초기화
-        setFormData({
-          amount: '',
-          cardNumber: '',
-          expiryMonth: '',
-          expiryYear: '',
-          installment: '0',
-          orderName: '',
-          customerName: '',
-        });
+        // 성공 시 기본값으로 되돌려 반복 테스트에 편리하게 함
+        setFormData(defaultForm);
       }
     } catch (error) {
       console.error('Payment error:', error);

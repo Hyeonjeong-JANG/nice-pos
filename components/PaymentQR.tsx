@@ -13,6 +13,16 @@ export default function PaymentQR() {
     orderName: '',
   });
 
+  const defaultForm = {
+    amount: '10000',
+    qrType: QRPaymentType.KAKAO_PAY,
+    orderName: '커피 2잔',
+  };
+
+  if (formData.amount === '' && formData.orderName === '') {
+    setTimeout(() => setFormData(defaultForm), 0);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -32,11 +42,7 @@ export default function PaymentQR() {
       setResult(data);
 
       if (data.success) {
-        setFormData({
-          amount: '',
-          qrType: QRPaymentType.KAKAO_PAY,
-          orderName: '',
-        });
+        setFormData(defaultForm);
       }
     } catch (error) {
       console.error('Payment error:', error);
