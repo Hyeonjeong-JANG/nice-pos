@@ -4,24 +4,16 @@ import { useState } from 'react';
 import { formatAmount } from '@/lib/utils';
 import { PaymentResponse, QRPaymentType } from '@/types/payment';
 
+const defaultForm = {
+  amount: '10000',
+  qrType: QRPaymentType.KAKAO_PAY,
+  orderName: '커피 2잔',
+};
+
 export default function PaymentQR() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PaymentResponse | null>(null);
-  const [formData, setFormData] = useState({
-    amount: '',
-    qrType: QRPaymentType.KAKAO_PAY,
-    orderName: '',
-  });
-
-  const defaultForm = {
-    amount: '10000',
-    qrType: QRPaymentType.KAKAO_PAY,
-    orderName: '커피 2잔',
-  };
-
-  if (formData.amount === '' && formData.orderName === '') {
-    setTimeout(() => setFormData(defaultForm), 0);
-  }
+  const [formData, setFormData] = useState(defaultForm);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,9 +118,8 @@ export default function PaymentQR() {
 
       {result && (
         <div
-          className={`mt-4 p-4 rounded-lg ${
-            result.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
-          }`}
+          className={`mt-4 p-4 rounded-lg ${result.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
+            }`}
         >
           <h3 className={`font-bold mb-2 ${result.success ? 'text-green-800' : 'text-red-800'}`}>
             {result.success ? '✓ 결제 성공' : '✗ 결제 실패'}

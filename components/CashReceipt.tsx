@@ -4,28 +4,18 @@ import { useState } from 'react';
 import { formatAmount } from '@/lib/utils';
 import { PaymentResponse } from '@/types/payment';
 
+const defaultForm = {
+  amount: '10000',
+  receiptType: 'PERSONAL' as 'PERSONAL' | 'BUSINESS',
+  phoneNumber: '010-1234-5678',
+  registrationNumber: '123-45-67890',
+  orderName: '커피 2잔',
+};
+
 export default function CashReceipt() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PaymentResponse | null>(null);
-  const [formData, setFormData] = useState({
-    amount: '',
-    receiptType: 'PERSONAL' as 'PERSONAL' | 'BUSINESS',
-    phoneNumber: '',
-    registrationNumber: '',
-    orderName: '',
-  });
-
-  const defaultForm = {
-    amount: '10000',
-    receiptType: 'PERSONAL' as 'PERSONAL' | 'BUSINESS',
-    phoneNumber: '010-1234-5678',
-    registrationNumber: '123-45-67890',
-    orderName: '커피 2잔',
-  };
-
-  if (formData.amount === '' && formData.orderName === '') {
-    setTimeout(() => setFormData(defaultForm), 0);
-  }
+  const [formData, setFormData] = useState(defaultForm);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,9 +139,8 @@ export default function CashReceipt() {
 
       {result && (
         <div
-          className={`mt-4 p-4 rounded-lg ${
-            result.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
-          }`}
+          className={`mt-4 p-4 rounded-lg ${result.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
+            }`}
         >
           <h3 className={`font-bold mb-2 ${result.success ? 'text-green-800' : 'text-red-800'}`}>
             {result.success ? '✓ 발행 성공' : '✗ 발행 실패'}

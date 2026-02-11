@@ -4,36 +4,21 @@ import { useState } from 'react';
 import { formatAmount } from '@/lib/utils';
 import { PaymentResponse } from '@/types/payment';
 
+const defaultForm = {
+  amount: '10000',
+  cardNumber: '1234-5678-9012-3456',
+  expiryMonth: '12',
+  expiryYear: '25',
+  installment: '0',
+  orderName: '커피 2잔',
+  customerName: '홍길동',
+};
+
 export default function PaymentCard() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PaymentResponse | null>(null);
-  const [formData, setFormData] = useState({
-    amount: '',
-    cardNumber: '',
-    expiryMonth: '',
-    expiryYear: '',
-    installment: '0',
-    orderName: '',
-    customerName: '',
-  });
-
-  const defaultForm = {
-    amount: '10000',
-    cardNumber: '1234-5678-9012-3456',
-    expiryMonth: '12',
-    expiryYear: '25',
-    installment: '0',
-    orderName: '커피 2잔',
-    customerName: '홍길동',
-  };
-
   // Prefill with defaults for easier testing / placeholder experience
-  // but keep controlled inputs so users can edit before submitting
-  if (formData.amount === '' && formData.cardNumber === '') {
-    // initialize once
-    // use a microtask to avoid changing state during render in strict mode
-    setTimeout(() => setFormData(defaultForm), 0);
-  }
+  const [formData, setFormData] = useState(defaultForm);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -186,9 +171,8 @@ export default function PaymentCard() {
 
       {result && (
         <div
-          className={`mt-4 p-4 rounded-lg ${
-            result.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
-          }`}
+          className={`mt-4 p-4 rounded-lg ${result.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
+            }`}
         >
           <h3 className={`font-bold mb-2 ${result.success ? 'text-green-800' : 'text-red-800'}`}>
             {result.success ? '✓ 결제 성공' : '✗ 결제 실패'}
