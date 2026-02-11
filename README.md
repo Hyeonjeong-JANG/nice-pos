@@ -36,10 +36,10 @@
 
 ### 왜 이 구조인가?
 
-1. **Next.js API Routes**: 웹과 앱이 동일한 API를 사용
+1. **Next.js API Routes**: 프론트엔드와 백엔드가 하나의 프로젝트에서 동작
 2. **공통 타입 정의**: TypeScript로 타입 안정성 보장
 3. **시뮬레이션 모드**: 실제 NICE API 없이도 테스트 가능
-4. **확장 가능**: React Native 앱에서 동일한 API 호출
+4. **확장 가능**: RESTful API 구조로 다른 클라이언트에서도 사용 가능
 
 ## 🚀 시작하기
 
@@ -150,44 +150,7 @@ sequenceDiagram
 5. 승인 번호 발급
 6. 사용자에게 영수증 URL 제공
 
-## 📱 모바일 앱 연동
 
-### React Native 앱에서 사용하기
-
-동일한 API 엔드포인트를 사용합니다:
-
-```typescript
-// React Native 앱
-import axios from 'axios';
-
-const API_BASE_URL = 'https://your-domain.com/api';
-
-// 카드 결제
-const payWithCard = async (paymentData) => {
-  const response = await axios.post(
-    `${API_BASE_URL}/payment/card`,
-    paymentData
-  );
-  return response.data;
-};
-
-// QR 결제
-const payWithQR = async (paymentData) => {
-  const response = await axios.post(
-    `${API_BASE_URL}/payment/qr`,
-    paymentData
-  );
-  return response.data;
-};
-
-// 결제 내역 조회
-const getPaymentHistory = async (page = 1) => {
-  const response = await axios.get(
-    `${API_BASE_URL}/payment/history?page=${page}`
-  );
-  return response.data;
-};
-```
 
 ## 🔌 API 문서
 
@@ -392,12 +355,7 @@ NICE_API_URL=https://api.nicepay.co.kr
 - [ ] 대시보드 및 통계
 - [ ] 정산 관리
 
-### 모바일 앱
 
-- [ ] React Native 앱 개발
-- [ ] 생체 인증 연동
-- [ ] 푸시 알림
-- [ ] 오프라인 모드
 
 ## 📞 문의
 

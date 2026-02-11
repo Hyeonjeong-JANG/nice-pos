@@ -1,7 +1,7 @@
 {
   "name": "nice-pos",
   "version": "1.0.0",
-  "description": "NICE POS POC - 웹과 앱을 모두 지원하는 결제 시스템",
+  "description": "NICE POS POC - 웹 기반 결제 시스템",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
